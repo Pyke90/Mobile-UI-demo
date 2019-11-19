@@ -1,5 +1,8 @@
-import {createMaterialTopTabNavigator} from 'react-navigation';
+import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
+import { createAppContainer } from 'react-navigation';
 import MainTab from '../screens/MainTab';
+import SecondaryTab from '../screens/SecondaryTab';
+
 
 const Routes = createMaterialTopTabNavigator(
     {
@@ -21,4 +24,4 @@ const Routes = createMaterialTopTabNavigator(
     }
     );
 
-    export default Routes
+    export default createAppContainer(Routes);

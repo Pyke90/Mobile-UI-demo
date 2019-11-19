@@ -16,7 +16,7 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-const MainTab = () => {
+const SecondaryTab = () => {
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -27,14 +27,15 @@ const MainTab = () => {
           <Header />
           {global.HermesInternal == null ? null : (
             <View style={styles.engine}>
-              <Text style={styles.footer}>Kikkeliskokkelis</Text>
+              <Text style={styles.footer}>Engine: Hermes</Text>
             </View>
           )}
           <View style={styles.body}>
             <View style={styles.sectionContainer}>
               <Text style={styles.sectionTitle}>Step One</Text>
               <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> trololololo
+                Edit <Text style={styles.highlight}>App.js</Text> to change this
+                screen and then come back to see your edits.
               </Text>
             </View>
             <View style={styles.sectionContainer}>
@@ -102,4 +103,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MainTab;
+export default SecondaryTab;
