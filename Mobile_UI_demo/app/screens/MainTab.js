@@ -1,105 +1,96 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+import { Button, Dimensions, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { connect } from 'react-redux';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import { increaseCounter, decreaseCounter } from '../redux/actions/counterActions';
 
-const MainTab = () => {
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Kikkeliskokkelis</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> trololololo
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
+
+const Counter = (props) => {
+    return (
+      <SafeAreaView style={styles.container}>
+
+        <Text style={styles.counterTitle}>Counter</Text>
+
+        <View style={styles.counterContainer}>
+          <TouchableOpacity onPress={() => props.reduxIncreaseCounter()}>
+            <Text style={styles.buttonText}>+</Text>
+          </TouchableOpacity>
+
+          <Text style={styles.counterText}>{props.counter}</Text>
+
+          <TouchableOpacity onPress={() => props.reduxDecreaseCounter()}>
+            <Text style={styles.buttonText}>-</Text>
+          </TouchableOpacity>
+        </View>
+
       </SafeAreaView>
-    </>
-  );
-};
+    )
+  
+}
 
+
+// Styles
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  engine: {
-    position: 'absolute',
-    right: 0,
+  loggedInContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 40,
   },
-  body: {
-    backgroundColor: Colors.white,
+  loginButton: {
+    marginTop: 20,
+    paddingTop: 20,
   },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  counterContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
+  loggedInText: {
+    fontFamily: 'System',
+    fontSize: 17,
     fontWeight: '400',
-    color: Colors.dark,
+    color: '#000',
   },
-  highlight: {
+  counterTitle: {
+    fontFamily: 'System',
+    fontSize: 32,
     fontWeight: '700',
+    color: '#000',
   },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
+  counterText: {
+    fontFamily: 'System',
+    fontSize: 36,
+    fontWeight: '400',
+    color: '#000',
+  },
+  buttonText: {
+    fontFamily: 'System',
+    fontSize: 50,
+    fontWeight: '300',
+    color: '#007AFF',
+    marginLeft: 40,
+    marginRight: 40,
   },
 });
 
-export default MainTab;
+const mapStateToProps = (state) => ({
+  counter: state.counterReducer.counter,
+})
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+      reduxIncreaseCounter: () => dispatch(increaseCounter()),
+      reduxDecreaseCounter: () => dispatch(decreaseCounter()),
+   };
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Counter);
