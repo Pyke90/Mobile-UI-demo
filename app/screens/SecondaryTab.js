@@ -1,5 +1,12 @@
 import React from 'react';
-import { Button, Dimensions, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Button, 
+          Dimensions, 
+          SafeAreaView, 
+          StyleSheet, 
+          Text, 
+          TouchableOpacity,
+          ScrollView, 
+          View } from 'react-native';
 import { connect } from 'react-redux';
 
 import { increaseCounter, decreaseCounter } from '../redux/actions/counterActions';
@@ -7,27 +14,41 @@ import { increaseCounter, decreaseCounter } from '../redux/actions/counterAction
 
 const Counter = (props) => {
     return (
-      <SafeAreaView style={styles.container}>
+      <>
+      <ScrollView>
 
         <Text style={styles.counterTitle}>Counter</Text>
 
         <View style={styles.counterContainer}>
-          <TouchableOpacity onPress={() => props.reduxIncreaseCounter()}>
+          <TouchableOpacity onPress={() => props.increaseCounter()}>
             <Text style={styles.buttonText}>+</Text>
           </TouchableOpacity>
 
           <Text style={styles.counterText}>{props.counter}</Text>
 
-          <TouchableOpacity onPress={() => props.reduxDecreaseCounter()}>
+          <TouchableOpacity onPress={() => props.decreaseCounter()}>
             <Text style={styles.buttonText}>-</Text>
           </TouchableOpacity>
         </View>
 
-      </SafeAreaView>
-    )
-  
+      </ScrollView>
+      </>
+    )  
 }
 
+const mapStateToProps = (state) => ({
+  counter: state.counterReducer.counter,
+})
+
+//const mapDispatchToProps = (dispatch) => {
+//    return {
+ //     reduxIncreaseCounter: () => dispatch(increaseCounter()),
+//      reduxDecreaseCounter: () => dispatch(decreaseCounter()),
+//   };
+//};
+
+
+export default connect(mapStateToProps, { increaseCounter, decreaseCounter })(Counter);
 
 // Styles
 const styles = StyleSheet.create({
@@ -64,6 +85,7 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: '700',
     color: '#000',
+    textAlign: 'center',
   },
   counterText: {
     fontFamily: 'System',
@@ -80,17 +102,3 @@ const styles = StyleSheet.create({
     marginRight: 40,
   },
 });
-
-const mapStateToProps = (state) => ({
-  counter: state.counterReducer.counter,
-})
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-      reduxIncreaseCounter: () => dispatch(increaseCounter()),
-      reduxDecreaseCounter: () => dispatch(decreaseCounter()),
-   };
-};
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(Counter);
